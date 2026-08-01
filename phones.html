@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>phones</title>
+
+<style>
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background: #f5f5f5;
+}
+
+button {
+    padding: 10px 18px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+table {
+    border-collapse: collapse;
+    background: white;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+th:first-child,
+td:first-child {
+    text-align: left;
+    font-weight: bold;
+    background: #fafafa;
+}
+
+.best  { color: green; font-weight: bold; }
+.good  { color: seagreen; }
+.okay  { color: darkorange; }
+.worst { color: crimson; }
+</style>
+</head>
+<body>
+
+<button id="toggle">dad mode</button>
+
+<table id="phoneTable"></table>
+
+<script>
+const phones = [
+    "Galaxy A17",
+    "Galaxy S23 FE",
+    "Nothing Phone (1)",
+    "CMF Phone 2(a)",
+    "CMF Phone 2 Pro",
+    "Nothing Phone (3a) Lite"
+];
+
+const specs = [
+["price",
+["170","250","260","270","364","180"],
+["best","good","okay","okay","worst","best"]],
+
+["size",
+['6.7"','6.4"','6.55"','6.7"','6.77"','6.77"'],
+["okay","best","best","okay","worst","worst"]],
+
+["weight",
+["192 g","209 g","193.5 g","190 g","185 g","201 g"],
+["good","worst","okay","good","best","okay"]],
+
+["resolution",
+["FHD+","FHD+","FHD+","FHD+","FHD+","FHD+"],
+["good","good","good","good","good","good"]],
+
+["refresh rate",
+["90 Hz","120 Hz (adaptive)","120 Hz","120 Hz","120 Hz","120 Hz"],
+["worst","best","good","good","good","good"]],
+
+["brightness",
+["1150 nits","1450 nits","1200 nits","1300 nits","3000 nits","3000 nits"],
+["worst","good","okay","okay","best","best"]],
+
+["HDR",
+["no","HDR10+","HDR10+","HDR10+","HDR10+","HDR10+"],
+["worst","best","best","best","best","best"]],
+
+["cameras",
+["50+5+2 MP, OIS","50+12+8 MP, OIS, 3× telephoto","50+50 MP, OIS","50+50 MP, OIS","50+50+8 MP, OIS, 2× telephoto","50+8+2 MP, OIS"],
+["worst","best","good","good","best","okay"]],
+
+["processor",
+["Exynos 1330","Snapdragon 8 Gen 1 / Exynos 2200","Snapdragon 778G+","Dimensity 7200 Pro","Dimensity 7300 Pro","Snapdragon 7s Gen 3"],
+["worst","best","okay","good","good","best"]],
+
+["RAM",
+["4 GB","8 GB","8 GB","8 GB","8 GB","8 GB"],
+["worst","good","good","good","good","good"]],
+
+["battery size",
+["5000 mAh","4500 mAh","4500 mAh","5000 mAh","5000 mAh","5000 mAh"],
+["good","okay","okay","good","good","good"]],
+
+["charging speed",
+["25 W","25 W","33 W","45 W","33 W","50 W"],
+["worst","worst","good","best","good","best"]],
+
+["protection rating",
+["IP54","IP68","IP53","IP54","IP54","IP64"],
+["okay","best","worst","okay","okay","good"]],
+
+["years of OS support",
+["5 years","5 years","4 years","4 years security","6 years","6 years"],
+["good","good","worst","worst","best","best"]]
+];
+
+let ratings = false;
+
+function cls(v){
+    return v.toLowerCase();
+}
+
+function render() {
+    const table = document.getElementById("phoneTable");
+
+    let html = "<tr><th>Spec</th>";
+
+    phones.forEach(p => html += `<th>${p}</th>`);
+
+    html += "</tr>";
+
+    specs.forEach(([name, values, relative]) => {
+        html += `<tr><td>${name}</td>`;
+
+        (ratings ? relative : values).forEach(v => {
+            if (ratings) {
+                html += `<td class="${cls(v)}">${v}</td>`;
+            } else {
+                html += `<td>${v}</td>`;
+            }
+        });
+
+        html += "</tr>";
+    });
+
+    table.innerHTML = html;
+}
+
+document.getElementById("toggle").onclick = () => {
+    ratings = !ratings;
+    document.getElementById("toggle").textContent =
+        ratings ? "normal view" : "dad mode";
+    render();
+};
+
+render();
+</script>
+
+</body>
+</html>
